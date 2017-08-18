@@ -10,10 +10,10 @@ import time
 conn=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 conn.connect(('192.168.0.114',8086))
 
-data = ""
+old_time = time.time()
+data = ''.encode('utf-8')
 payload_size = struct.calcsize("L")
 
-old_time = time.time()
 while True:
     while len(data) < payload_size:
         data += conn.recv(4096)
@@ -25,7 +25,7 @@ while True:
     frame_data = data[:msg_size]
     data = data[msg_size:]
 
-    conn.send("A")
+    conn.send("A".encode('utf-8'))
 
     compressed_frame = pickle.loads(frame_data)
     frame = cv2.imdecode(compressed_frame, 1)
@@ -33,7 +33,6 @@ while True:
     cv2.imshow('frame', resize_frame)
     k = cv2.waitKey(1)
     if k == 27:
-        cv2.destoryWindow()
         break
     cur_time = time.time()
     fps = 1/(cur_time - old_time)
