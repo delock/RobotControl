@@ -25,10 +25,12 @@ while True:
     frame_data = data[:msg_size]
     data = data[msg_size:]
 
+    conn.send("A")
+
     compressed_frame = pickle.loads(frame_data)
     frame = cv2.imdecode(compressed_frame, 1)
-    #big_frame = cv2.resize(frame, (1920, 1080), interpolation=cv2.INTER_CUBIC)
-    cv2.imshow('frame', frame)
+    resize_frame = cv2.resize(frame, (1080,1080))
+    cv2.imshow('frame', resize_frame)
     k = cv2.waitKey(1)
     if k == 27:
         cv2.destoryWindow()
