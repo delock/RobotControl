@@ -8,7 +8,7 @@ import time
 
 # create connection
 conn=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-conn.connect(('192.168.0.114',8086))
+conn.connect(('192.168.0.114',8087))
 
 old_time = time.time()
 data = ''.encode('utf-8')
@@ -36,5 +36,5 @@ while True:
         break
     cur_time = time.time()
     fps = 1/(cur_time - old_time)
-    print ("fps = " + str(fps))
+    #print ("fps = " + str(fps))
     old_time = cur_time
