@@ -58,6 +58,7 @@ def inference_frame(threadName, cap):
     global order
 
     while True:
+        #begin = time.time()
         local_frame = frame
         img = local_frame[360:720, 360:720]
         img = cv2.resize(img, dim)
@@ -68,9 +69,8 @@ def inference_frame(threadName, cap):
         graph.LoadTensor(img.astype(np.float16), 'user object')
         output, userobj = graph.GetResult()
         order = output.argsort()[::-1][:6]
-        #print ('\n---------- prediction -----------')
-        #for i in range(1,6):
-        #    print ('prediction ' + str(i) + ' is ' + labels[order[i]])
+        #end = time.time()
+        #print ("inference in " + str(end-begin) + " s")
 
 def grab_frame(threadName, cap):
     global frame
