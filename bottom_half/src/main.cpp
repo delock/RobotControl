@@ -15,13 +15,15 @@ void setup()
     camTurnTo (0.5, 0.0);
 
     initWheel();
-    setKeepTime(1.0);
+    //setKeepTime(1.0);
     while (!Serial);
 }
 
 void processCommand (String command)
 {
-    if (command.startsWith("campos ")) {
+    if (command.startsWith("echo ")) {
+        Serial.println(command);
+    } else if (command.startsWith("campos ")) {
         float pitch, yaw;
 
         String pitchStr = command.substring(7);
@@ -59,11 +61,11 @@ void loop()
     String val;
     #if 1
     if (Serial.available()) {
-        val = Serial.readString();
+        val = Serial.readStringUntil('\n');
         processCommand(val);
         Serial.println("+OK");
     }
     #endif
     wheelLoop();
-    delay (1);
+    //delay (1);
 }
