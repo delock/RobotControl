@@ -2,18 +2,22 @@
 // by delock https://github.com/delock
 
 #include <Arduino.h>
-#include <Servo.h>
-
-Servo pitchCam;   // attach your pitch servo to pin 9
-#define PIT_CAM_SERVO_PIN 9
-//Servo yawCam;   // I have no installed this servo yet
-
-void initCamServo()
-{
-    pitchCam.attach(PITCH_CAM_SERVO_PIN);
-}
+#include "cam_servo.hpp"
 
 void setup()
 {
     initCamServo();
+    camTurnTo (1.0, 0.0);
+    delay (1000);
+    camTurnTo (0.5, 0.0);
+    delay (1000);
+    camTurnTo (0.0, 0.0);
+    delay (1000);
+    camTurnTo (-0.5, 0.0);
+    delay (1000);
+    camTurnTo (0.5, 0.0);
+}
+
+void loop()
+{
 }
