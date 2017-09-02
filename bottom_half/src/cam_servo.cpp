@@ -1,5 +1,5 @@
 #include <Servo.h>
-#include "cam_servo.hpp"
+#include "cam_servo.h"
 
 Servo pitchCam; // attach your pitch servo to pin 9
 Servo yawCam;   // I have not installed this servo yet
