@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import socket
 import sys
 import cv2
@@ -8,12 +9,13 @@ import time
 
 # create connection
 conn=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-conn.connect(('192.168.0.114',8086))
+conn.connect(('192.168.0.114',8087))
 
 old_time = time.time()
 data = ''.encode('utf-8')
 payload_size = struct.calcsize("L")
 
+command = "00"
 while True:
     # receieve image
     while len(data) < payload_size:
@@ -82,7 +84,7 @@ while True:
     label4 = data[:msg_size]
     data = data[msg_size:]
 
-    conn.send("B".encode('utf-8'))
+    conn.send(command.encode('utf-8'))
 
     compressed_frame = pickle.loads(frame_data)
     frame = cv2.imdecode(compressed_frame, 1)
@@ -101,6 +103,37 @@ while True:
     k = cv2.waitKey(1)
     if k == 27:
         break
+    elif k==-1:
+        command = "00"
+    elif k==113:  #Q
+        command = "W7"
+    elif k==119:  #W
+        command = "W8"
+    elif k==101:  #E
+        command = "W9"
+    elif k==97:   #A
+        command = "W4"
+    elif k==115:  #S
+        command = "W5"
+    elif k==100:  #D
+        command = "W6"
+    elif k==122:  #Z
+        command = "W1"
+    elif k==120:  #X
+        command = "W2"
+    elif k==99:   #C
+        command = "W3"
+    elif k==81:   #Left key
+        command = "C4"
+    elif k==82:   #Up key
+        command = "C8"
+    elif k==83:   #Right key
+        command = "C6"
+    elif k==84:   #Right key
+        command = "C2"
+    else:
+        print("key=" + str(k))
+        command = "01"
     cur_time = time.time()
     fps = 1/(cur_time - old_time)
     #print ("fps = " + str(fps))
