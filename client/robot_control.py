@@ -135,6 +135,6 @@ while True:
         print("key=" + str(k))
         command = "01"
     cur_time = time.time()
-    fps = 1/(cur_time - old_time)
+    #fps = 1/(cur_time - old_time)
     #print ("fps = " + str(fps))
     old_time = cur_time
