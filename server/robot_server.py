@@ -7,6 +7,7 @@ import pickle
 import struct
 import _thread as thread
 import time
+import serial
 from mvnc import mvncapi as mvnc
 
 def init_ncs(network):
@@ -141,7 +142,7 @@ thread.start_new_thread (inference_frame, ("Inference thread", cap))
 
 # network stuff
 HOST = ''
-PORT = 8086
+PORT = 8087
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 print ('Socket created')
@@ -157,6 +158,8 @@ connected = True
 print ('Connected from ' + str(addr))
 
 old_time = time.time()
+
+ser = serial.Serial('/dev/ttyACM0', 9600)
 
 try:
     local_index = 0
@@ -185,7 +188,53 @@ try:
                 label = labels[order[4]]
                 label = label.encode()
                 conn.sendall(struct.pack("L", len(label))+label)
-                conn.recv(1)
+
+                # receieve a key from client, and show it
+                command = conn.recv(2).decode("utf-8")
+
+                wait_serial = False
+                if (command == "C8"):
+                    ser.write(bytes("campos 0 0\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "C2"):
+                    ser.write(bytes("campos 500 0\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W8"):
+                    ser.write(bytes("wheel 800 800\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W5"):
+                    ser.write(bytes("wheel 0 0\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W2"):
+                    ser.write(bytes("wheel -800 -800\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W4"):
+                    ser.write(bytes("wheel -800 800\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W6"):
+                    ser.write(bytes("wheel 800 -800\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W7"):
+                    ser.write(bytes("wheel 600 1000\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W9"):
+                    ser.write(bytes("wheel 1000 600\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W1"):
+                    ser.write(bytes("wheel -600 -1000\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "W3"):
+                    ser.write(bytes("wheel -1000 -600\n", "utf-8"))
+                    wait_serial = True
+
+                while wait_serial:
+                    val = ser.readline()
+                    string = val.decode("utf-8")
+                    print (string)
+                    if (string == "+OK\r\n"):
+                        break
+
+                print (command)
             except socket.error as msg:
                 connected = False
                 print ('Connection closed')
