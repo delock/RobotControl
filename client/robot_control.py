@@ -9,7 +9,7 @@ import time
 
 # create connection
 conn=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
-conn.connect(('192.168.0.114',8087))
+conn.connect((sys.argv[1], int(sys.argv[2])))
 
 old_time = time.time()
 data = ''.encode('utf-8')
