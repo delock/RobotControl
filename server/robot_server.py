@@ -142,7 +142,7 @@ thread.start_new_thread (inference_frame, ("Inference thread", cap))
 
 # network stuff
 HOST = ''
-PORT = 8087
+PORT = int(sys.argv[1])
 
 s=socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 print ('Socket created')
@@ -234,7 +234,7 @@ try:
                     if (string == "+OK\r\n"):
                         break
 
-                print (command)
+                #print (command)
             except socket.error as msg:
                 connected = False
                 print ('Connection closed')
