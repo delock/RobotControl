@@ -1,0 +1,15 @@
+# The reference reagent robot is the one I debug my software on, so I list the materials here:
+1. DFRobot Devastator Tank Mobile Platform.  For people want to buy one, here is a [purchase link](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=44673299047&_u=3bdbs2de0c), I purchase the upgraded version which use metal motor component.  Note: I don't have affiliance with any purchase link I posted here.
+2. DFRobot RoMeo V2 controller.  This is the bottom half controller that drive the wheel and also the servo that position the camera. [purchase link](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=18955799709&_u=3bdbs2f468)
+3. GY-89 10DOF, a 10DOF module with LSM303D+L3GD20+BMP180, [purchase link](https://detail.tmall.com/item.htm?id=42362578979&spm=a1z09.2.0.0.2ed6e797NI8ZMR&_u=3bdbs2495e).  You can choose other model but the program in bottom half work with this model.
+4. Intel Joule 570x with expansion board.
+5. Intel Movidius Neural Compute Stick.
+6. Fish eye camera.  I don't mean camera with distortion.  I mean camera with true 2\pi (180 degree) FOV.  I choose this SY019HD which proves to cover the disired field, and lens looks superior.   [purchase link](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=535947099245&_u=3bdbs2257b).  I buy the USB version without case, and I asked shop owner to use shorter cable (50cm will be enough).
+7. DC-DC, anything can output 11v and 5v with 25W will do.  I choose [this](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=17230263235&_u=3bdbs24466) DFRobot DC-DC module.  You need two of them, one to power the Romeo, wheel, and servos, the other one to power Joule 570x.   The model I choose can be fixed at 5V output or a var voltage output with a screwdriver.
+8. thermal fan to put on the Joule 570x module to keep the tempreture down.   I used an 1 inch 5v fan.  You can also choose to build termal solution according to Joule 570x manual.
+9. 12v lithon [purchase link](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=37502434824&_u=3bdbs20f63)  You need to pay attention to the dimension.  The model I purchase overly fit a little but I use a strap to keep it in place.
+10. USB HUB, [here](https://detail.tmall.com/item.htm?id=548714131763&spm=a1z09.2.0.0.2ed6e797NI8ZMR&_u=3bdbs218a5&sku_properties=148242406:40233957) is a 3 port USB hub sit neatly on top of the battery I purchase
+11. RDS3115 servo, [purchase link](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=521728033704&_u=3bdbs23ef6), I purchase the 270 degree with 17kg model.  Choose the standard U shape case (suite 1).  This is the one to put camera on
+12. DS3115 servo, [purchase link](https://buyertrade.taobao.com/trade/itemlist/list_bought_items.htm?spm=2013.1.1997525045.2.4b556901pIkyqF), I choose the 270 degree with metal plate.
+13. Servo case, [purchase link](https://item.taobao.com/item.htm?spm=a1z09.2.0.0.2ed6e797NI8ZMR&id=530797376820&_u=3bdbs2255a), this one is used to mount the DS3115 servo
+14. You need some connectors, let me fill in the details later
