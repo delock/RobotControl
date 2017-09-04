@@ -10,9 +10,7 @@ void setup()
     Serial.begin (9600);
 
     initCamServo();
-    camTurnTo (0.0, 0.0);
-    delay (1000);
-    camTurnTo (0.5, 0.0);
+    camTurnTo (1.0, 0.0);
 
     initWheel();
     //setKeepTime(1.0);

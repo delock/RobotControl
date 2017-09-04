@@ -161,6 +161,16 @@ old_time = time.time()
 
 ser = serial.Serial('/dev/ttyACM0', 9600)
 
+cam_pitch = 1000
+cam_yaw = 0
+ser.write(bytes("campos 1000 0\n", "utf-8"))
+while True:
+    val = ser.readline()
+    string = val.decode("utf-8")
+    print (string)
+    if (string == "+OK\r\n"):
+        break
+
 try:
     local_index = 0
     while True:
@@ -194,10 +204,38 @@ try:
 
                 wait_serial = False
                 if (command == "C8"):
-                    ser.write(bytes("campos 0 0\n", "utf-8"))
+                    cam_pitch = cam_pitch - 100
+                    if(cam_pitch < -1000):
+                        cam_pitch = -1000
+                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
                     wait_serial = True
                 elif (command == "C2"):
-                    ser.write(bytes("campos 500 0\n", "utf-8"))
+                    cam_pitch = cam_pitch + 100
+                    if(cam_pitch > 1400):
+                        cam_pitch = 1400
+                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "C4"):
+                    cam_yaw = cam_yaw - 100
+                    if(cam_yaw < -1200):
+                        cam_yaw = -1200
+                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "C6"):
+                    cam_yaw = cam_yaw + 100
+                    if(cam_yaw > 1200):
+                        cam_yaw = 1200
+                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "C0"):
+                    cam_yaw = 0
+                    cam_pitch = 0
+                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
+                    wait_serial = True
+                elif (command == "C5"):
+                    cam_yaw = 0
+                    cam_pitch = 1000
+                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
                     wait_serial = True
                 elif (command == "W8"):
                     ser.write(bytes("wheel 800 800\n", "utf-8"))
