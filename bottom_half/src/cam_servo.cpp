@@ -1,37 +1,47 @@
 #include <Servo.h>
 #include "cam_servo.h"
 
-Servo pitchCam; // attach your pitch servo to pin 9
-Servo yawCam;   // I have not installed this servo yet
+Servo pitch_cam; // attach your pitch servo to pin 9
+Servo yaw_cam;   // I have not installed this servo yet
+#define YAW_CAM_SERVO_PIN 8
 #define PITCH_CAM_SERVO_PIN 9
 
-#define START 20
-#define UPRIGHT 105
-#define FORWARD 45
-#define END 165
+#define PITCH_START 20
+#define PITCH_UPRIGHT 105
+#define PITCH_FORWARD 45
+#define PITCH_END 165
+#define PITCH_LIMIT (PITCH_UPRIGHT-PITCH_START)*1.0/(PITCH_UPRIGHT-PITCH_FORWARD)
+
+#define YAW_START 12
+#define YAW_RIGHT 30
+#define YAW_FRONT 96
+#define YAW_LEFT 162
+#define YAW_END   180
+#define YAW_LIMIT (YAW_END-YAW_FRONT)*1.0/(YAW_LEFT-YAW_FRONT)
+
 
 void initCamServo(void)
 {
-    pitchCam.attach(PITCH_CAM_SERVO_PIN);
+    pitch_cam.attach(PITCH_CAM_SERVO_PIN);
+    yaw_cam.attach(YAW_CAM_SERVO_PIN);
 }
 
-// pitch -- 0: upright, 0.5: right forward, 1.0: max down angle, -0.5: max backward angle
+// pitch -- 0: upright, 1.0: right forward, PITH_LIMIT: max down angle, -1.0: max backward angle
 // yaw   -- 0: to the front, 1.0: to the right, -1.0: to the left
 void camTurnTo(float pitch, float yaw)
 {
-    int pitchVal;
+    int pitch_val, yaw_val;
 
-    // pitch is within [-1, 1]
-    if (pitch > 1.0) pitch = 1.0;
-    if (pitch <-0.5) pitch = -0.5;
+    // pitch is within [-0.5, 1]
+    if (pitch > PITCH_LIMIT) pitch = PITCH_LIMIT;
+    if (pitch <-1) pitch = -1;
+    pitch_val = -pitch * (PITCH_UPRIGHT - PITCH_FORWARD) + PITCH_UPRIGHT;
 
-    if (pitch >= 0 && pitch <= 0.5) {
-        pitchVal = UPRIGHT - pitch * 2 * (UPRIGHT - FORWARD);
-    } else if (pitch >= 0.5) {
-        pitchVal = FORWARD - (pitch-0.5) * 2 * (FORWARD- START);
-    } else { // pitch <0
-        pitchVal = UPRIGHT + (UPRIGHT - END) * pitch*2;
-    }
+    // yaw is within [-1, 1]
+    if (yaw > YAW_LIMIT) yaw = YAW_LIMIT;
+    if (yaw <-YAW_LIMIT) yaw = -YAW_LIMIT;
+    yaw_val = - yaw * (YAW_FRONT - YAW_RIGHT) + YAW_FRONT;
 
-    pitchCam.write(pitchVal);
+    pitch_cam.write(pitch_val);
+    yaw_cam.write(yaw_val);
 }
