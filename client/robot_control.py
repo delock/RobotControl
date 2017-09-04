@@ -129,8 +129,12 @@ while True:
         command = "C8"
     elif k==83:   #Right key
         command = "C6"
-    elif k==84:   #Right key
+    elif k==84:   #Down key
         command = "C2"
+    elif k==85:   #PgUp key
+        command = "C0"
+    elif k==86:   #PgDn key
+        command = "C5"
     else:
         print("key=" + str(k))
         command = "01"
