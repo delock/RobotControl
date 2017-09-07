@@ -167,7 +167,7 @@ ser.write(bytes("campos 1000 0\n", "utf-8"))
 while True:
     val = ser.readline()
     string = val.decode("utf-8")
-    print (string)
+    #print (string)
     if (string == "+OK\r\n"):
         break
 
@@ -268,7 +268,7 @@ try:
                 while wait_serial:
                     val = ser.readline()
                     string = val.decode("utf-8")
-                    print (string)
+                    #print (string)
                     if (string == "+OK\r\n"):
                         break
 
