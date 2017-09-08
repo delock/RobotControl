@@ -168,7 +168,8 @@ while True:
     val = ser.readline()
     string = val.decode("utf-8")
     #print (string)
-    if (string == "+OK\r\n"):
+    if (string.startswith("+OK")):
+        print (string)
         break
 
 try:
@@ -269,7 +270,8 @@ try:
                     val = ser.readline()
                     string = val.decode("utf-8")
                     #print (string)
-                    if (string == "+OK\r\n"):
+                    if (string.startswith("+OK")):
+                        print (string)
                         break
 
                 #print (command)
