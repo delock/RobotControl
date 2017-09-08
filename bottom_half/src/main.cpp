@@ -2,12 +2,17 @@
 // by delock https://github.com/delock
 
 #include <Arduino.h>
+#include <Wire.h>
 #include "cam_servo.h"
 #include "wheel.h"
+#include "10dof.h"
 
 void setup()
 {
     Serial.begin (9600);
+    Wire.begin();
+
+    initSensors();
 
     initCamServo();
     camTurnTo (1.0, 0.0);
@@ -56,12 +61,34 @@ void processCommand (String command)
 
 void loop()
 {
+    float sensors[3][3];
+
+    getSensors(sensors);
+
     String val;
     #if 1
     if (Serial.available()) {
         val = Serial.readStringUntil('\n');
         processCommand(val);
-        Serial.println("+OK");
+        Serial.print("+OK ");
+        Serial.print(sensors[0][0]);
+        Serial.print(" ");
+        Serial.print(sensors[0][1]);
+        Serial.print(" ");
+        Serial.print(sensors[0][2]);
+        Serial.print(" ");
+        Serial.print(sensors[1][0]);
+        Serial.print(" ");
+        Serial.print(sensors[1][1]);
+        Serial.print(" ");
+        Serial.print(sensors[1][2]);
+        Serial.print(" ");
+        Serial.print(sensors[2][0]);
+        Serial.print(" ");
+        Serial.print(sensors[2][1]);
+        Serial.print(" ");
+        Serial.print(sensors[2][2]);
+        Serial.println("");
     }
     #endif
     wheelLoop();
