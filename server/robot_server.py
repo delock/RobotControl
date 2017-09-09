@@ -12,6 +12,7 @@ import serial
 import ncs
 import camera
 import telemetry
+import bottom_half
 import settings as st
 
 st.connected = False
@@ -52,18 +53,9 @@ print ('Connected from ' + str(addr))
 
 old_time = time.time()
 
-ser = serial.Serial('/dev/ttyACM0', 9600)
+bottom_half.init_bottom_half()
 
-cam_pitch = 1000
-cam_yaw = 0
-ser.write(bytes("campos 1000 0\n", "utf-8"))
-while True:
-    val = ser.readline()
-    string = val.decode("utf-8")
-    #print (string)
-    if (string.startswith("+OK")):
-        print (string)
-        break
+bottom_half.cam_position(1000, 0)
 
 try:
     local_index = 0
@@ -96,76 +88,36 @@ try:
                 # receieve a key from client, and show it
                 command = conn.recv(2).decode("utf-8")
 
-                wait_serial = False
                 if (command == "C8"):
-                    cam_pitch = cam_pitch - 100
-                    if(cam_pitch < -1000):
-                        cam_pitch = -1000
-                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.cam_up();
                 elif (command == "C2"):
-                    cam_pitch = cam_pitch + 100
-                    if(cam_pitch > 1400):
-                        cam_pitch = 1400
-                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.cam_down();
                 elif (command == "C4"):
-                    cam_yaw = cam_yaw - 100
-                    if(cam_yaw < -1200):
-                        cam_yaw = -1200
-                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.cam_left();
                 elif (command == "C6"):
-                    cam_yaw = cam_yaw + 100
-                    if(cam_yaw > 1200):
-                        cam_yaw = 1200
-                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.cam_right();
                 elif (command == "C0"):
-                    cam_yaw = 0
-                    cam_pitch = 0
-                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.cam_position(0, 0)
                 elif (command == "C5"):
-                    cam_yaw = 0
-                    cam_pitch = 1000
-                    ser.write(bytes("campos "+str(cam_pitch)+" "+str(cam_yaw)+"\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.cam_position(1000, 0)
                 elif (command == "W8"):
-                    ser.write(bytes("wheel 800 800\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_forward()
                 elif (command == "W5"):
-                    ser.write(bytes("wheel 0 0\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_stop()
                 elif (command == "W2"):
-                    ser.write(bytes("wheel -800 -800\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_backward()
                 elif (command == "W4"):
-                    ser.write(bytes("wheel -800 800\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_left()
                 elif (command == "W6"):
-                    ser.write(bytes("wheel 800 -800\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_right()
                 elif (command == "W7"):
-                    ser.write(bytes("wheel 600 1000\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_speed(600, 1000)
                 elif (command == "W9"):
-                    ser.write(bytes("wheel 1000 600\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_speed(1000, 600)
                 elif (command == "W1"):
-                    ser.write(bytes("wheel -600 -1000\n", "utf-8"))
-                    wait_serial = True
+                    bottom_half.wheel_speed(-600, -1000)
                 elif (command == "W3"):
-                    ser.write(bytes("wheel -1000 -600\n", "utf-8"))
-                    wait_serial = True
-
-                while wait_serial:
-                    val = ser.readline()
-                    string = val.decode("utf-8")
-                    #print (string)
-                    if (string.startswith("+OK")):
-                        print (string)
-                        break
+                    bottom_half.wheel_speed(-1000, -600)
 
                 #print (command)
             except socket.error as msg:
