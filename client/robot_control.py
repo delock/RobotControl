@@ -114,15 +114,9 @@ while True:
     elif k==97:   #A
         command = "W4"
     elif k==115:  #S
-        command = "W5"
+        command = "W2"
     elif k==100:  #D
         command = "W6"
-    elif k==122:  #Z
-        command = "W1"
-    elif k==120:  #X
-        command = "W2"
-    elif k==99:   #C
-        command = "W3"
     elif k==81:   #Left key
         command = "C4"
     elif k==82:   #Up key
