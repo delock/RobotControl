@@ -3,9 +3,10 @@ import time
 import serial
 import settings as st
 
-def init_bottom_half():
+def init():
     global ser
     ser = serial.Serial('/dev/ttyACM0', 115200)
+    cam_position(1000, 0)
 
 def send_command(command):
     global ser
@@ -82,3 +83,7 @@ def wheel_right(speed = 1000):
 
 def wheel_stop():
     wheel_speed (0, 0);
+
+def close():
+    global ser
+    ser.close()

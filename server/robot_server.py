@@ -1,9 +1,6 @@
 #!/usr/bin/python3
-import cv2
-import numpy as np
 import socket
 import sys
-import _thread as thread
 import time
 
 import ncs
@@ -12,32 +9,16 @@ import telemetry
 import bottom_half
 import settings as st
 
-# initialize camera
-cap = cv2.VideoCapture(0)
-cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
-cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
-cap.set(cv2.CAP_PROP_FPS, 30)
-
-_, st.frame = cap.read()
-
+#### init ####
+camera.init()
 ncs.init('googlenet')
-st.frame_index = 0
-
-# network stuff
-HOST = ''
-PORT = int(sys.argv[1])
-telemetry.init(HOST, PORT)
-
-thread.start_new_thread (camera.grab_frame, ("Capture thread", cap))
-thread.start_new_thread (telemetry.compress_frame, ("Compress thread", cap))
-thread.start_new_thread (ncs.inference_frame, ("Inference thread", cap))
+telemetry.init('', int(sys.argv[1]))
+bottom_half.init()
+##############
 
 telemetry.accept_connection()
 
 #old_time = time.time()
-
-bottom_half.init_bottom_half()
-bottom_half.cam_position(1000, 0)
 
 try:
     local_index = 0
@@ -107,3 +88,5 @@ finally:
     print ("closing")
     telemetry.close()
     ncs.close()
+    bottom_half.close()
+    camera.close()

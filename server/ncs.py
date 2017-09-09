@@ -2,6 +2,7 @@
 import cv2
 import numpy as np
 import time
+import _thread as thread
 from mvnc import mvncapi as mvnc
 import settings
 
@@ -44,8 +45,10 @@ def init(network):
     iterations = graph.GetGraphOption(mvnc.GraphOption.ITERATIONS)
     ilsvrc_mean = np.load('ilsvrc_2012_mean.npy').mean(1).mean(1)
 
+    thread.start_new_thread(inference_frame, ("Inference thread", (0)))
 
-def inference_frame(threadName, cap):
+
+def inference_frame(threadName, arg):
     global dim
     global ilsvrc_mean
     global graph
