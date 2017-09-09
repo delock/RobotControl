@@ -1,1 +1,3 @@
 campos pitch yaw
+wheel left right
+light 1/0
