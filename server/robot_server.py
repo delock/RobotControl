@@ -7,7 +7,6 @@ import pickle
 import struct
 import _thread as thread
 import time
-import serial
 
 import ncs
 import camera
