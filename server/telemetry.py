@@ -4,6 +4,7 @@ import socket
 import pickle
 import struct
 import time
+import _thread as thread
 import settings as st
 
 global index
@@ -21,6 +22,8 @@ def init(host, port):
     s.listen(1) # only allow one connection
     connected = False
     print ('Socket now listening')
+
+    thread.start_new_thread (compress_frame, ("Compress thread", (0)))
 
 def accept_connection():
     global s
@@ -52,7 +55,7 @@ def recv_command(length=2):
     command = conn.recv(length).decode("utf-8")
     return command
 
-def compress_frame(threadName, cap):
+def compress_frame(threadName, arg):
     global compressed_frame
     global connected
     global index
