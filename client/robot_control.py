@@ -129,6 +129,10 @@ while True:
         command = "C0"
     elif k==86:   #PgDn key
         command = "C5"
+    elif k==49:   #1 key
+        command = "L1"
+    elif k==50:   #0 key
+        command = "L0"
     else:
         print("key=" + str(k))
         command = "01"
