@@ -8,7 +8,7 @@ import settings as st
 
 global index
 
-def init_telemetry(host, port):
+def init(host, port):
     global s
     global compressed_frame
     global connected
