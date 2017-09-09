@@ -5,39 +5,39 @@ import time
 
 import ncs
 import camera
-import telemetry
+import telebotics
 import bottom_half
 import settings as st
 
 #### init ####
 camera.init()
 ncs.init('googlenet')
-telemetry.init('', int(sys.argv[1]))
+telebotics.init('', int(sys.argv[1]))
 bottom_half.init()
 ##############
 
-telemetry.accept_connection()
+telebotics.accept_connection()
 
 #old_time = time.time()
 
 try:
     local_index = 0
     while True:
-        if (local_index < telemetry.index):
-            local_index = telemetry.index
+        if (local_index < telebotics.index):
+            local_index = telebotics.index
 
             #time0 = time.time()
 
             try:
-                telemetry.send_frame()
-                telemetry.send_string(st.labels[st.order[0]])
-                telemetry.send_string(st.labels[st.order[1]])
-                telemetry.send_string(st.labels[st.order[2]])
-                telemetry.send_string(st.labels[st.order[3]])
-                telemetry.send_string(st.labels[st.order[4]])
+                telebotics.send_frame()
+                telebotics.send_string(st.labels[st.order[0]])
+                telebotics.send_string(st.labels[st.order[1]])
+                telebotics.send_string(st.labels[st.order[2]])
+                telebotics.send_string(st.labels[st.order[3]])
+                telebotics.send_string(st.labels[st.order[4]])
 
                 # receieve a key from client, and show it
-                command = telemetry.recv_command()
+                command = telebotics.recv_command()
 
                 if (command == "C8"):
                     bottom_half.cam_up();
@@ -76,10 +76,10 @@ try:
 
                 #print (command)
             except socket.error as msg:
-                telemetry.disconnected()
+                telebotics.disconnected()
                 print ('Connection closed')
                 print ('Wait for new connection')
-                telemetry.accept_connection()
+                telebotics.accept_connection()
                 print ('Connected from ' + str(addr))
                 #old_time = time.time()
 
@@ -90,7 +90,7 @@ try:
 
 finally:
     print ("closing")
-    telemetry.close()
+    telebotics.close()
     ncs.close()
     bottom_half.close()
     camera.close()
