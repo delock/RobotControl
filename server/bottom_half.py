@@ -5,7 +5,7 @@ import settings as st
 
 def init_bottom_half():
     global ser
-    ser = serial.Serial('/dev/ttyACM0', 9600)
+    ser = serial.Serial('/dev/ttyACM0', 115200)
 
 def send_command(command):
     global ser
