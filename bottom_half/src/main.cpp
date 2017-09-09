@@ -6,6 +6,7 @@
 #include "cam_servo.h"
 #include "wheel.h"
 #include "10dof.h"
+#include "light.h"
 
 void setup()
 {
@@ -56,6 +57,17 @@ void processCommand (String command)
         Serial.print(" , ");
         Serial.println(right);
         setSpeed(left, right);
+    } else if (command.startsWith("light ")) {
+        String lightStr = command.substring(6);
+        int light = lightStr.toInt();
+        Serial.print("set light: ");
+        if (light) {
+            Serial.print("on");
+        } else {
+            Serial.print("off");
+        }
+        Serial.println("");
+        setLight (light);
     }
 }
 
