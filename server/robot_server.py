@@ -69,6 +69,10 @@ try:
                     bottom_half.wheel_speed(-200, -1000)
                 elif (command == "W3"):
                     bottom_half.wheel_speed(-1000, -200)
+                elif (command == "L1"):
+                    bottom_half.light(True)
+                elif (command == "L0"):
+                    bottom_half.light(False)
 
                 #print (command)
             except socket.error as msg:

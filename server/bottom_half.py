@@ -84,6 +84,12 @@ def wheel_right(speed = 1000):
 def wheel_stop():
     wheel_speed (0, 0);
 
+def light(on):
+    if (on):
+        send_command("light 1")
+    else:
+        send_command("light 0")
+
 def close():
     global ser
     ser.close()
