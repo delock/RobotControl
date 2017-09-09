@@ -32,15 +32,11 @@ HOST = ''
 PORT = int(sys.argv[1])
 
 telemetry.init_telemetry(HOST, PORT)
-print ('Socket now listening')
+telemetry.accept_connection()
 
-addr = telemetry.accept_connection()
-print ('Connected from ' + str(addr))
-
-old_time = time.time()
+#old_time = time.time()
 
 bottom_half.init_bottom_half()
-
 bottom_half.cam_position(1000, 0)
 
 try:
@@ -100,7 +96,7 @@ try:
                 print ('Wait for new connection')
                 telemetry.accept_connection()
                 print ('Connected from ' + str(addr))
-                old_time = time.time()
+                #old_time = time.time()
 
             #time1 = time.time()
             #print (str(local_index) + ": send data (" + str(len(data)) + " bytes) took "

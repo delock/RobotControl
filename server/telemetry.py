@@ -20,6 +20,7 @@ def init_telemetry(host, port):
     s.bind((host, port))
     s.listen(1) # only allow one connection
     connected = False
+    print ('Socket now listening')
 
 def accept_connection():
     global s
@@ -28,7 +29,7 @@ def accept_connection():
 
     conn, addr = s.accept()
     connected = True
-    return addr
+    print ('Connected from ' + str(addr))
 
 def disconnected():
     global connected
