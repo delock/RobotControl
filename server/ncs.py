@@ -5,7 +5,7 @@ import time
 from mvnc import mvncapi as mvnc
 import settings
 
-def init_ncs(network):
+def init(network):
     global dim
     global ilsvrc_mean
     global graph

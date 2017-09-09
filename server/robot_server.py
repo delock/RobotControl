@@ -20,18 +20,18 @@ cap.set(cv2.CAP_PROP_FPS, 30)
 
 _, st.frame = cap.read()
 
-ncs.init_ncs('googlenet')
+ncs.init('googlenet')
 st.frame_index = 0
+
+# network stuff
+HOST = ''
+PORT = int(sys.argv[1])
+telemetry.init(HOST, PORT)
 
 thread.start_new_thread (camera.grab_frame, ("Capture thread", cap))
 thread.start_new_thread (telemetry.compress_frame, ("Compress thread", cap))
 thread.start_new_thread (ncs.inference_frame, ("Inference thread", cap))
 
-# network stuff
-HOST = ''
-PORT = int(sys.argv[1])
-
-telemetry.init_telemetry(HOST, PORT)
 telemetry.accept_connection()
 
 #old_time = time.time()
