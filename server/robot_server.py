@@ -110,13 +110,13 @@ try:
                 elif (command == "W6"):
                     bottom_half.wheel_right()
                 elif (command == "W7"):
-                    bottom_half.wheel_speed(600, 1000)
+                    bottom_half.wheel_speed(200, 1000)
                 elif (command == "W9"):
-                    bottom_half.wheel_speed(1000, 600)
+                    bottom_half.wheel_speed(1000, 200)
                 elif (command == "W1"):
-                    bottom_half.wheel_speed(-600, -1000)
+                    bottom_half.wheel_speed(-200, -1000)
                 elif (command == "W3"):
-                    bottom_half.wheel_speed(-1000, -600)
+                    bottom_half.wheel_speed(-1000, -200)
 
                 #print (command)
             except socket.error as msg:
