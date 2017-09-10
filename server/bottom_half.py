@@ -10,17 +10,14 @@ def init():
 
 def send_command(command):
     global ser
-    try:
-        ser.write(bytes(command+"\n", "utf-8"))
-        while True:
-            val = ser.readline()
-            string = val.decode("utf-8")
-            #print (string)
-            if (string.startswith("+OK")):
-                print (string)
-                break
-    finally:
-        close();
+    ser.write(bytes(command+"\n", "utf-8"))
+    while True:
+        val = ser.readline()
+        string = val.decode("utf-8")
+        #print (string)
+        if (string.startswith("+OK")):
+            print (string)
+            break
 
 def cam_position(pitch, yaw):
     global cam_pitch
