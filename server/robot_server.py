@@ -80,7 +80,6 @@ try:
                 print ('Connection closed')
                 print ('Wait for new connection')
                 telebotics.accept_connection()
-                print ('Connected from ' + str(addr))
                 #old_time = time.time()
 
             #time1 = time.time()
@@ -90,7 +89,3 @@ try:
 
 finally:
     print ("closing")
-    telebotics.close()
-    ncs.close()
-    bottom_half.close()
-    camera.close()
