@@ -74,7 +74,6 @@ try:
                 elif (command == "L0"):
                     bottom_half.light(False)
 
-                #print (command)
             except socket.error as msg:
                 telebotics.disconnected()
                 print ('Connection closed')
@@ -89,3 +88,4 @@ try:
 
 finally:
     print ("closing")
+    bottom_half.close()
