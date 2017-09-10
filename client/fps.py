@@ -1,4 +1,6 @@
-times = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
+times = [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,
+         0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0]
 time_index = 0
 total_count = 0
 
@@ -10,9 +12,9 @@ def getFPS(time):
     times[time_index] = time
     total_count = total_count + 1
     time_index = time_index + 1
-    if (total_count > 6):
-        total_count = 6
-    if (time_index >= 6):
+    if (total_count > 30):
+        total_count = 30
+    if (time_index >= 30):
         time_index = 0
 
     total_time = 0.0

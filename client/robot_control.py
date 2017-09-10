@@ -3,6 +3,7 @@ import sys
 import cv2
 import time
 import networks
+import fps
 
 # create connection
 networks.init(sys.argv[1], int(sys.argv[2]))
@@ -27,9 +28,8 @@ while True:
     networks.sendString(command)
 
     cur_time = time.time()
-    fps = 1/(cur_time - old_time)
-    fps = int(fps*10)/10
-    cv2.putText(resize_frame, "FPS: "+str(fps), (10, 1000), font, 1, (255,255,255),2,cv2.LINE_AA)
+    cur_fps = fps.getFPS(cur_time - old_time)
+    cv2.putText(resize_frame, "FPS: "+str(cur_fps), (10, 1000), font, 1, (255,255,255),2,cv2.LINE_AA)
     old_time = cur_time
 
     cv2.imshow('frame', resize_frame)
