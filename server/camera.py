@@ -19,13 +19,16 @@ def init():
 
 def grab_frame(threadName, cap):
     st.frame_index = 0
-    while True:
-        #begin = time.time()
-        _, cap_frame = cap.read()
-        st.frame = cap_frame[0:1079, 420:1499]
-        st.frame_index = st.frame_index + 1
-        #end = time.time()
-        #print ("capture frame in " + str(end-begin) + " s")
+    try:
+        while True:
+            #begin = time.time()
+            _, cap_frame = cap.read()
+            st.frame = cap_frame[0:1079, 420:1499]
+            st.frame_index = st.frame_index + 1
+            #end = time.time()
+            #print ("capture frame in " + str(end-begin) + " s")
+    finally:
+        close()
 
 def close():
     global cap
