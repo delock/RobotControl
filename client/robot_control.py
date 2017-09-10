@@ -2,29 +2,29 @@
 import sys
 import cv2
 import time
-import telebotics
+import networks
 
 # create connection
-telebotics.init(sys.argv[1], int(sys.argv[2]))
+networks.init(sys.argv[1], int(sys.argv[2]))
 
 old_time = time.time()
 
 command = "00"
 while True:
-    compressed_frame = telebotics.recvFrame()
+    compressed_frame = networks.recvFrame()
     frame = cv2.imdecode(compressed_frame, 1)
     resize_frame = cv2.resize(frame, (1080,1080))
     resize_frame = cv2.copyMakeBorder(resize_frame, 0, 0, 840, 0, cv2.BORDER_CONSTANT)
 
     # print label
     font = cv2.FONT_HERSHEY_SIMPLEX
-    cv2.putText(resize_frame,telebotics.recvString(), (10,50), font, 1,(255,255,255),2,cv2.LINE_AA)       
-    cv2.putText(resize_frame,telebotics.recvString(), (10,100), font, 1,(255,255,255),2,cv2.LINE_AA)       
-    cv2.putText(resize_frame,telebotics.recvString(), (10,150), font, 1,(255,255,255),2,cv2.LINE_AA)       
-    cv2.putText(resize_frame,telebotics.recvString(), (10,200), font, 1,(255,255,255),2,cv2.LINE_AA)       
-    cv2.putText(resize_frame,telebotics.recvString(), (10,250), font, 1,(255,255,255),2,cv2.LINE_AA)       
+    cv2.putText(resize_frame,networks.recvString(), (10,50), font, 1,(255,255,255),2,cv2.LINE_AA)       
+    cv2.putText(resize_frame,networks.recvString(), (10,100), font, 1,(255,255,255),2,cv2.LINE_AA)       
+    cv2.putText(resize_frame,networks.recvString(), (10,150), font, 1,(255,255,255),2,cv2.LINE_AA)       
+    cv2.putText(resize_frame,networks.recvString(), (10,200), font, 1,(255,255,255),2,cv2.LINE_AA)       
+    cv2.putText(resize_frame,networks.recvString(), (10,250), font, 1,(255,255,255),2,cv2.LINE_AA)       
 
-    telebotics.sendString(command)
+    networks.sendString(command)
 
     cur_time = time.time()
     fps = 1/(cur_time - old_time)
