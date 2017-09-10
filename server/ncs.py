@@ -54,20 +54,23 @@ def inference_frame(threadName, arg):
     global graph
     global labels
 
-    while True:
-        #begin = time.time()
-        local_frame = settings.frame
-        img = local_frame[360:720, 360:720]
-        img = cv2.resize(img, dim)
-        img = img.astype(np.float32)
-        img[:,:,0] = (img[:,:,0] - ilsvrc_mean[0])
-        img[:,:,1] = (img[:,:,1] - ilsvrc_mean[1])
-        img[:,:,2] = (img[:,:,2] - ilsvrc_mean[2])
-        graph.LoadTensor(img.astype(np.float16), 'user object')
-        output, userobj = graph.GetResult()
-        settings.order = output.argsort()[::-1][:6]
-        #end = time.time()
-        #print ("inference in " + str(end-begin) + " s")
+    try:
+        while True:
+            #begin = time.time()
+            local_frame = settings.frame
+            img = local_frame[360:720, 360:720]
+            img = cv2.resize(img, dim)
+            img = img.astype(np.float32)
+            img[:,:,0] = (img[:,:,0] - ilsvrc_mean[0])
+            img[:,:,1] = (img[:,:,1] - ilsvrc_mean[1])
+            img[:,:,2] = (img[:,:,2] - ilsvrc_mean[2])
+            graph.LoadTensor(img.astype(np.float16), 'user object')
+            output, userobj = graph.GetResult()
+            settings.order = output.argsort()[::-1][:6]
+            #end = time.time()
+            #print ("inference in " + str(end-begin) + " s")
+    finally:
+        close()
 
 def close():
     global graph

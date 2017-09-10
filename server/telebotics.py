@@ -38,6 +38,7 @@ def disconnected():
     global connected
 
     connected = False
+
 def send_frame():
     global conn
     global compressed_frame
@@ -63,18 +64,21 @@ def compress_frame(threadName, arg):
     local_index = 0
 
     index = 0
-    while True:
-        if (connected and local_index < st.frame_index):
-            #begin = time.time()
-            local_frame = st.frame
+    try:
+        while True:
+            if (connected and local_index < st.frame_index):
+                #begin = time.time()
+                local_frame = st.frame
 
-            local_index = st.frame_index
-            resize_frame = cv2.resize(local_frame, (500, 500))
-            _,compressed_frame = cv2.imencode(".jpg", resize_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
-            index = index + 1
-            #end = time.time()
-            #print ("compress frame in " + str(1000*(end-begin)) + " ms")
-        time.sleep(0.0001)
+                local_index = st.frame_index
+                resize_frame = cv2.resize(local_frame, (500, 500))
+                _,compressed_frame = cv2.imencode(".jpg", resize_frame, [int(cv2.IMWRITE_JPEG_QUALITY), 30])
+                index = index + 1
+                #end = time.time()
+                #print ("compress frame in " + str(1000*(end-begin)) + " ms")
+            time.sleep(0.0001)
+    finally:
+        close()
 
 def close():
     global s
