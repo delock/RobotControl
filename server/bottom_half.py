@@ -34,7 +34,7 @@ def cam_position(pitch, yaw):
         send_command("campos "
                             + str(cam_pitch) + " "
                             + str(yaw))
-        time.sleep (0.01)
+        time.sleep (0.01)   # avoid power overload
         send_command("campos "
                             + str(pitch) + " "
                             + str(yaw))
