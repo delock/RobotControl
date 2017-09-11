@@ -3,8 +3,15 @@ import time
 import serial
 import settings as st
 
+global cam_pitch
+global cam_yaw
+
+cam_pitch = -1
+cam_yaw = -1
+
 def init():
     global ser
+
     ser = serial.Serial('/dev/ttyACM0', 115200)
     cam_position(1000, 0)
 
@@ -23,12 +30,20 @@ def cam_position(pitch, yaw):
     global cam_pitch
     global cam_yaw
 
-    cam_pitch = pitch
-    cam_yaw   = yaw
-
-    send_command("campos "
+    if (cam_pitch != pitch and cam_yaw != yaw):
+        send_command("campos "
+                            + str(cam_pitch) + " "
+                            + str(yaw))
+        time.sleep (0.01)
+        send_command("campos "
                             + str(pitch) + " "
                             + str(yaw))
+    else:
+        send_command("campos "
+                            + str(pitch) + " "
+                            + str(yaw))
+    cam_pitch = pitch
+    cam_yaw   = yaw
 
 def cam_up(delta = 100):
     global cam_pitch
