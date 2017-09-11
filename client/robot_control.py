@@ -10,6 +10,7 @@ from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
 from kivy.uix.image import Image
 from kivy.core.image import Image as CoreImage
+from kivy.core.window import Window
 from kivy.graphics import *
 from kivy.clock import Clock
 
@@ -24,11 +25,13 @@ class CameraFeed(Image):
 
 class RobotControl(App):
     def action_thread(self):
+        global stop_flag
+
         networks.init(sys.argv[1], int(sys.argv[2]))
 
         old_time = time.time()
 
-        command = "00"
+        self.command = "00"
         while True:
             compressed_frame = networks.recvFrame()
             data = io.BytesIO(compressed_frame)
@@ -40,59 +43,71 @@ class RobotControl(App):
             self.label_4.text = networks.recvString()
             self.label_5.text = networks.recvString()
 
-            networks.sendString(command)
+            networks.sendString(self.command)
 
             cur_time = time.time()
             cur_fps = fps.getFPS(cur_time - old_time)
             self.label_fps.text = "FPS: " + str(cur_fps)
             old_time = cur_time
-
-            #cv2.imshow('frame', resize_frame)
-            #k = cv2.waitKey(1)
-            #if k == 27:
-            #    break
-            #elif k==-1:
-            #    command = "00"
-            #elif k==113:  #Q
-            #    command = "W7"
-            #elif k==119:  #W
-            #    command = "W8"
-            #elif k==101:  #E
-            #    command = "W9"
-            #elif k==97:   #A
-            #    command = "W4"
-            #elif k==115:  #S
-            #    command = "W2"
-            #elif k==100:  #D
-            #    command = "W6"
-            #elif k==81:   #Left key
-            #    command = "C4"
-            #elif k==82:   #Up key
-            #    command = "C8"
-            #elif k==83:   #Right key
-            #    command = "C6"
-            #elif k==84:   #Down key
-            #    command = "C2"
-            #elif k==85:   #PgUp key
-            #    command = "C0"
-            #elif k==86:   #PgDn key
-            #    command = "C5"
-            #elif k==49:   #1 key
-            #    command = "L1"
-            #elif k==50:   #0 key
-            #    command = "L0"
-            #else:
-            #    print("key=" + str(k))
-            #    command = "01"
+            if (stop_flag):
+                break
 
     def on_refresh(self, dt):
-        print ("hello " + str(dt))
         self.camera_feed.update_bg(self.im)
-        pass
+        return True
 
     def on_start(self):
         threading.Thread(target=self.action_thread).start()
         event = Clock.schedule_interval(self.on_refresh, 1/30.)
+        self.keyboard = Window.request_keyboard(self.keyboard_closed, self)
+        self.keyboard.bind(on_key_down=self.on_keyboard_down)
+        self.keyboard.bind(on_key_up=self.on_keyboard_up)
+
+    def keyboard_closed(self):
+        self.keyboard.unbind(on_key_down=self.on_keyboard_down)
+        self.keyboard.unbind(on_key_up=self.on_keyboard_up)
+
+    def on_keyboard_down(self, keyboard, keycode, text, modifiers):
+        if keycode[1] == 'w':
+            self.command = "W8"
+        elif keycode[1] == 's':
+            self.command = "W2"
+        elif keycode[1] == 'a':
+            self.command = "W4"
+        elif keycode[1] == 'd':
+            self.command = "W6"
+        elif keycode[1] == 'q':
+            self.command = "W7"
+        elif keycode[1] == 'e':
+            self.command = "W9"
+
+        elif keycode[1] == '1':
+            self.command = "L1"
+        elif keycode[1] == '2':
+            self.command = "L0"
+
+        elif keycode[1] == 'up':
+            self.command = "C8"
+        elif keycode[1] == 'down':
+            self.command = "C2"
+        elif keycode[1] == 'left':
+            self.command = "C4"
+        elif keycode[1] == 'right':
+            self.command = "C6"
+        elif keycode[1] == 'pageup':
+            self.command = "C0"
+        elif keycode[1] == 'pagedown':
+            self.command = "C5"
+
+        if keycode[1] == 'escape':
+            keyboard.release()
+            return False
+        else:
+            return True
+
+    def on_keyboard_up(self, keyboard, keycode):
+        self.command = "00"
+        return True
 
     def build(self):
         label_layout = GridLayout(cols=1)
@@ -119,5 +134,9 @@ class RobotControl(App):
 
         return top_layout
 
+global stop_flag
+
+stop_flag = False
 RobotControl().run()
+stop_flag = True
 
