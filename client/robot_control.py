@@ -21,7 +21,7 @@ class CameraFeed(Image):
     def update_bg(self, im):
         tex = im.texture
         with self.canvas:
-            self.bg = Rectangle(texture=tex, pos=self.pos, size=self.size)
+            self.texture = tex
 
 class RobotControl(App):
     def action_thread(self):
@@ -53,7 +53,8 @@ class RobotControl(App):
                 break
 
     def on_refresh(self, dt):
-        self.camera_feed.update_bg(self.im)
+        if (self.im != None):
+            self.camera_feed.update_bg(self.im)
         return True
 
     def on_start(self):
@@ -119,6 +120,7 @@ class RobotControl(App):
         self.label_5 = Label(text="rank-5")
         self.label_fps = Label(text="fps")
 
+        self.im = None
         self.camera_feed = CameraFeed()
 
         label_layout.add_widget(self.label_1)
