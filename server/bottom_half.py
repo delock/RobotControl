@@ -3,12 +3,6 @@ import time
 import serial
 import settings as st
 
-global cam_pitch
-global cam_yaw
-
-cam_pitch = -1
-cam_yaw = -1
-
 def init():
     global ser
 
@@ -30,18 +24,9 @@ def cam_position(pitch, yaw):
     global cam_pitch
     global cam_yaw
 
-    if (cam_pitch != pitch and cam_yaw != yaw):
-        send_command("campos "
-                            + str(cam_pitch) + " "
-                            + str(yaw))
-        time.sleep (0.01)   # avoid power overload
-        send_command("campos "
-                            + str(pitch) + " "
-                            + str(yaw))
-    else:
-        send_command("campos "
-                            + str(pitch) + " "
-                            + str(yaw))
+    send_command("campos "
+                        + str(pitch) + " "
+                        + str(yaw))
     cam_pitch = pitch
     cam_yaw   = yaw
 

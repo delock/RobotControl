@@ -1,5 +1,6 @@
 #include <Servo.h>
 #include "cam_servo.h"
+#include <Arduino.h>
 
 Servo pitch_cam; // attach your pitch servo to pin 9
 Servo yaw_cam;   // I have not installed this servo yet
@@ -43,5 +44,6 @@ void camTurnTo(float pitch, float yaw)
     yaw_val = - yaw * (YAW_FRONT - YAW_RIGHT) + YAW_FRONT;
 
     pitch_cam.write(pitch_val);
+    delay(10); // avoid power over drive
     yaw_cam.write(yaw_val);
 }
