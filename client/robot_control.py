@@ -4,10 +4,23 @@ import time
 import io
 import threading
 
+from kivy.config import Config
+
+window_width = 1920
+window_height = 1080
+
+Config.set('graphics', 'left', '0')
+Config.set('graphics', 'top', '0')
+Config.set('graphics', 'width', str(window_width))
+Config.set('graphics', 'height', str(window_height))
+Config.set('graphics', 'borderless', '1')
+
+
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
 from kivy.uix.gridlayout import GridLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.image import Image
 from kivy.core.image import Image as CoreImage
 from kivy.core.window import Window
@@ -18,6 +31,10 @@ import networks
 import fps
 
 class CameraFeed(Image):
+    def __init__(self, **kwargs):
+        super(Image, self).__init__(**kwargs)
+        self.allow_stretch = True
+
     def update_bg(self, im):
         tex = im.texture
         with self.canvas:
@@ -111,7 +128,9 @@ class RobotControl(App):
         return True
 
     def build(self):
-        label_layout = GridLayout(cols=1)
+        middle_portion = window_height/window_width
+        side_portion = (1-middle_portion)/2
+        label_layout = GridLayout(cols=1, size_hint=(side_portion, 0.5), pos_hint={'x':1-side_portion, 'y':0.5})
 
         self.label_1 = Label(text="rank-1")
         self.label_2 = Label(text="rank-2")
@@ -121,7 +140,7 @@ class RobotControl(App):
         self.label_fps = Label(text="fps")
 
         self.im = None
-        self.camera_feed = CameraFeed()
+        self.camera_feed = CameraFeed(size_hint=(middle_portion, 1.0), pos_hint={'x':side_portion, 'y':0})
 
         label_layout.add_widget(self.label_1)
         label_layout.add_widget(self.label_2)
@@ -130,7 +149,7 @@ class RobotControl(App):
         label_layout.add_widget(self.label_5)
         label_layout.add_widget(self.label_fps)
 
-        top_layout = GridLayout(cols=2)
+        top_layout = FloatLayout(size=(1920,1080))
         top_layout.add_widget(self.camera_feed)
         top_layout.add_widget(label_layout)
 
