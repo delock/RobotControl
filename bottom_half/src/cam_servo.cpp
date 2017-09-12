@@ -44,6 +44,6 @@ void camTurnTo(float pitch, float yaw)
     yaw_val = - yaw * (YAW_FRONT - YAW_RIGHT) + YAW_FRONT;
 
     pitch_cam.write(pitch_val);
-    delay(10); // avoid power over drive
+    delay(30); // avoid power over drive
     yaw_cam.write(yaw_val);
 }
