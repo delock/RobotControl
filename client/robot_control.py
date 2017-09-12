@@ -6,6 +6,8 @@ import threading
 
 from kivy.config import Config
 
+#window_width = 3840
+#window_height = 2160
 window_width = 1920
 window_height = 1080
 
@@ -130,14 +132,15 @@ class RobotControl(App):
     def build(self):
         middle_portion = window_height/window_width
         side_portion = (1-middle_portion)/2
-        label_layout = GridLayout(cols=1, size_hint=(side_portion, 0.5), pos_hint={'x':1-side_portion, 'y':0.5})
+        side_pix = (window_width - window_height)/2
+        label_layout = GridLayout(cols=1, size_hint=(side_portion, 0.3), pos_hint={'x':1-side_portion, 'y':0.7})
 
-        self.label_1 = Label(text="rank-1")
-        self.label_2 = Label(text="rank-2")
-        self.label_3 = Label(text="rank-3")
-        self.label_4 = Label(text="rank-4")
-        self.label_5 = Label(text="rank-5")
-        self.label_fps = Label(text="fps")
+        self.label_1 = Label(text="rank-1", font_size='40sp', text_size = (side_pix, 40))
+        self.label_2 = Label(text="rank-2", font_size='35sp', text_size = (side_pix, 35))
+        self.label_3 = Label(text="rank-3", font_size='30sp', text_size = (side_pix, 30))
+        self.label_4 = Label(text="rank-4", font_size='25sp', text_size = (side_pix, 25))
+        self.label_5 = Label(text="rank-5", font_size='20sp', text_size = (side_pix, 20))
+        self.label_fps = Label(text="fps", font_size='40sp', text_size = (side_pix, 40))
 
         self.im = None
         self.camera_feed = CameraFeed(size_hint=(middle_portion, 1.0), pos_hint={'x':side_portion, 'y':0})
