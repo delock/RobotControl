@@ -62,6 +62,7 @@ class RobotControl(App):
             self.label_3.text = networks.recvString()
             self.label_4.text = networks.recvString()
             self.label_5.text = networks.recvString()
+            self.label_bump.text = networks.recvString()
 
             networks.sendString(self.command)
 
@@ -178,6 +179,7 @@ class RobotControl(App):
         self.label_3 = Label(text="rank-3", font_size='30sp', text_size = (side_pix, 30))
         self.label_4 = Label(text="rank-4", font_size='25sp', text_size = (side_pix, 25))
         self.label_5 = Label(text="rank-5", font_size='20sp', text_size = (side_pix, 20))
+        self.label_bump = Label(text="bump", font_size='40sp', text_size = (side_pix, 40))
         self.label_fps = Label(text="fps", font_size='40sp', text_size = (side_pix, 40))
 
         self.button_w = Button(text="W", font_size = '40sp', size_hint = (side_portion/4, 0.1),
@@ -226,6 +228,7 @@ class RobotControl(App):
         label_layout.add_widget(self.label_3)
         label_layout.add_widget(self.label_4)
         label_layout.add_widget(self.label_5)
+        label_layout.add_widget(self.label_bump)
         label_layout.add_widget(self.label_fps)
 
         top_layout = FloatLayout(size=(1920,1080))
