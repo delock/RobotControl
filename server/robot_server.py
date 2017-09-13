@@ -73,8 +73,6 @@ try:
                     bottom_half.light(True)
                 elif (command == "L0"):
                     bottom_half.light(False)
-                else:
-                    bottom_half.nop()
 
             except socket.error as msg:
                 telebotics.disconnected()
