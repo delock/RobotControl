@@ -40,7 +40,7 @@ global bump
 bump = 0.0
 bump_time = time.time()
 
-def get_bump():
+def getBump():
     update_bump(0)
     return bump
 
