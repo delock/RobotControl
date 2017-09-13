@@ -74,8 +74,15 @@ void processCommand (String command)
 void loop()
 {
     float sensors[3][3];
+    static float high_g = 0.0;
 
     getSensors(sensors);
+    float gx = sensors[1][0];
+    float gy = sensors[1][1];
+    float gz = sensors[1][2];
+    float gxy = sqrt(gx*gx + gy*gy);
+    if (gxy > high_g)
+        high_g = gxy;
 
     String val;
     #if 1
@@ -100,7 +107,10 @@ void loop()
         Serial.print(sensors[2][1]);
         Serial.print(" ");
         Serial.print(sensors[2][2]);
+        Serial.print(" ");
+        Serial.print(high_g);
         Serial.println("");
+        high_g = 0.0;
     }
     #endif
     wheelLoop();
