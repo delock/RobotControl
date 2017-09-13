@@ -36,13 +36,18 @@ def send_next_command():
         send_command("nop")
         return False
 
+global bump
+bump = 0
 def send_command(command):
+    global bump
     ser.write(bytes(command+"\n", "utf-8"))
     while True:
         val = ser.readline()
         string = val.decode("utf-8")
         if (string.startswith("+OK")):
-            print (string)
+            if (float(string.split(" ")[10]) > 5000):
+                print ("bump" + str(bump))
+                bump = bump+1
             break
 
 def cam_position(pitch, yaw):

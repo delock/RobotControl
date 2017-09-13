@@ -109,7 +109,7 @@ void loop()
         Serial.print(sensors[2][2]);
         Serial.print(" ");
         Serial.print(high_g);
-        Serial.println("");
+        Serial.println(" ");
         high_g = 0.0;
     }
     #endif
