@@ -37,7 +37,23 @@ def send_next_command():
         return False
 
 global bump
-bump = 0
+bump = 0.0
+bump_time = time.time()
+
+def update_bump(bump_val):
+    # definition of bump
+    # 1. high G
+    # 2. accumulated low G
+    global bump
+    global bump_time
+
+    current_time = time.time()
+    elapsed_time = current_time - bump_time
+    bump_time = current_time
+
+    bump = bump / (1.5**elapsed_time) + bump_val
+    print ("bump = " + str(bump))
+
 def send_command(command):
     global bump
     ser.write(bytes(command+"\n", "utf-8"))
@@ -45,9 +61,9 @@ def send_command(command):
         val = ser.readline()
         string = val.decode("utf-8")
         if (string.startswith("+OK")):
-            if (float(string.split(" ")[10]) > 5000):
-                print ("bump" + str(bump))
-                bump = bump+1
+            g_xy = float(string.split(" ")[10])
+            if (g_xy > 5000):
+                update_bump((g_xy-4000)/1000)
             break
 
 def cam_position(pitch, yaw):
