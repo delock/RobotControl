@@ -35,6 +35,7 @@ try:
                 telebotics.send_string(st.labels[st.order[2]])
                 telebotics.send_string(st.labels[st.order[3]])
                 telebotics.send_string(st.labels[st.order[4]])
+                telebotics.send_string(str(bottom_half.getBump()))
 
                 # receieve a key from client, and show it
                 command = telebotics.recv_command()
