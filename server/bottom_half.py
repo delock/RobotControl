@@ -90,6 +90,9 @@ def light(on):
     else:
         send_command("light 0")
 
+def nop():
+    send_command("nop ")
+
 def close():
     global ser
     ser.close()
