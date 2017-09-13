@@ -56,7 +56,7 @@ def update_bump(bump_val):
     bump_time = current_time
 
     bump = bump / (1.5**elapsed_time) + bump_val
-    print ("bump = " + str(bump))
+    #print ("bump = " + str(bump))
 
 def send_command(command):
     global bump
