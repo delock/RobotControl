@@ -180,7 +180,7 @@ class RobotControl(App):
                 instance.text = "1"
 
         else:
-            self.command = "00"
+            self.command = "W5"
 
     def reflect_command(self, command):
         # set button status
