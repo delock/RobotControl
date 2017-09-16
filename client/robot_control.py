@@ -174,10 +174,10 @@ class RobotControl(App):
             self.light = 1-self.light
             if (self.light == 1):
                 self.command = "L1"
-                instance.text = "#"
+                instance.text = "2"
             if (self.light == 0):
                 self.command = "L0"
-                instance.text = "-"
+                instance.text = "1"
 
         else:
             self.command = "00"
@@ -237,9 +237,9 @@ class RobotControl(App):
         if (command == "L1" or command == "L0"):
             self.button_light.background_color = [0.5, 1, 1, 1]
             if (command == "L1"):
-                self.button_light.text="#"
+                self.button_light.text="2"
             else:
-                self.button_light.text="-"
+                self.button_light.text="1"
         else:
             self.button_light.background_color = [1, 1, 1, 1]
 
@@ -257,30 +257,53 @@ class RobotControl(App):
         self.label_bump = Label(text="bump", font_size='40sp', text_size = (side_pix, 40))
         self.label_fps = Label(text="fps", font_size='40sp', text_size = (side_pix, 40))
 
-        self.button_w = Button(text="W", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': (side_portion/3), 'y':0.24})
-        self.button_a = Button(text="A", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': 0, 'y':0.12})
-        self.button_s = Button(text="S", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': (side_portion/3), 'y':0})
-        self.button_d = Button(text="D", font_size = '40sp', size_hint = (side_portion/4, 0.1),
+        self.button_w = Button(text="[b]W[/b]",
+                               markup = True,
+                               font_size = '40sp',
+                               size_hint = (side_portion/4, 0.1),
+                               pos_hint = {'x': (side_portion/3), 'y':0.24})
+        self.button_a = Button(text="[b]A[/b]",
+                               markup = True,
+                               font_size = '40sp',
+                               size_hint = (side_portion/4, 0.1),
+                               pos_hint = {'x': 0, 'y':0.12})
+        self.button_s = Button(text="[b]S[/b]",
+                               markup = True,
+                               font_size = '40sp',
+                               size_hint = (side_portion/4, 0.1),
+                               pos_hint = {'x': (side_portion/3), 'y':0})
+        self.button_d = Button(text="[b]D[/b]",
+                               markup = True,
+                               font_size = '40sp',
+                               size_hint = (side_portion/4, 0.1),
+                               pos_hint = {'x': (side_portion*2/3), 'y':0.12})
+        self.button_up      = Button(text="[b]^[/b]",
+                                     markup = True,
+                                     font_size = '40sp',
+                                     size_hint = (side_portion/4, 0.1),
+                                     pos_hint = {'x': (1-side_portion)+(side_portion/3), 'y':0.24})
+        self.button_left    = Button(text="[b]<[/b]",
+                                     markup = True,
+                                     font_size = '40sp',
+                                     size_hint = (side_portion/4, 0.1),
+                                     pos_hint = {'x': (1-side_portion), 'y':0.12})
+        self.button_down    = Button(text="v",
+                                     markup = True,
+                                     font_size = '40sp',
+                                     size_hint = (side_portion/4, 0.1),
+                                     pos_hint = {'x': (1-side_portion)+(side_portion/3), 'y':0})
+        self.button_right   = Button(text="[b]>[/b]",
+                                     markup = True,
+                                     font_size = '40sp',
+                                     size_hint = (side_portion/4, 0.1),
+                                     pos_hint = {'x': (1-side_portion)+(side_portion*2/3), 'y':0.12})
 
-                                                             pos_hint = {'x': (side_portion*2/3), 'y':0.12})
-        self.button_up = Button(text="^", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': (1-side_portion)+(side_portion/3), 'y':0.24})
-        self.button_left = Button(text="<", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': (1-side_portion), 'y':0.12})
-        self.button_down = Button(text="v", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': (1-side_portion)+(side_portion/3), 'y':0})
-        self.button_right = Button(text=">", font_size = '40sp', size_hint = (side_portion/4, 0.1),
-                                                             pos_hint = {'x': (1-side_portion)+(side_portion*2/3), 'y':0.12})
-
-        self.button_top = Button(text="skyview", font_size = '20sp', size_hint = (side_portion/4, 0.1),
+        self.button_top = Button(text="PgUp", markup = True, font_size = '32sp', size_hint = (side_portion/4, 0.1),
                                                              pos_hint = {'x': (1-side_portion)+(side_portion/3), 'y':0.52})
-        self.button_front = Button(text="frontview", font_size = '20sp', size_hint = (side_portion/4, 0.1),
+        self.button_front = Button(text="PgDn", markup = True, font_size = '32sp', size_hint = (side_portion/4, 0.1),
                                                              pos_hint = {'x': (1-side_portion)+(side_portion/3), 'y':0.4})
 
-        self.button_light = Button(text="-", font_size = '40sp', size_hint = (side_portion/4, 0.1),
+        self.button_light = Button(text="1", font_size = '40sp', size_hint = (side_portion/4, 0.1),
                                                              pos_hint = {'x': (side_portion/3), 'y':0.4})
 
         self.button_w.bind(state=self.button_callback)
