@@ -74,13 +74,68 @@ class RobotControl(App):
             self.label_5.text = networks.recvString()
             self.label_bump.text = networks.recvString()
 
+            command = self.command
             # set button status
-            if (self.command == "W8"):
+            if (command == "W8"):
                 self.button_w.background_color = [0.5, 1, 1, 1]
             else:
                 self.button_w.background_color = [1, 1, 1, 1]
 
-            networks.sendString(self.command)
+            if (command == "W4"):
+                self.button_a.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_a.background_color = [1, 1, 1, 1]
+
+            if (command == "W6"):
+                self.button_d.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_d.background_color = [1, 1, 1, 1]
+
+            if (command == "W2"):
+                self.button_s.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_s.background_color = [1, 1, 1, 1]
+
+            if (command == "C8"):
+                self.button_up.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_up.background_color = [1, 1, 1, 1]
+
+            if (command == "C4"):
+                self.button_left.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_left.background_color = [1, 1, 1, 1]
+
+            if (command == "C6"):
+                self.button_right.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_right.background_color = [1, 1, 1, 1]
+
+            if (command == "C2"):
+                self.button_down.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_down.background_color = [1, 1, 1, 1]
+
+            if (command == "C0"):
+                self.button_top.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_top.background_color = [1, 1, 1, 1]
+
+            if (command == "C5"):
+                self.button_front.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_front.background_color = [1, 1, 1, 1]
+
+            if (command == "L1" or command == "L0"):
+                self.button_light.background_color = [0.5, 1, 1, 1]
+                if (command == "L1"):
+                    self.button_light.text="#"
+                else:
+                    self.button_light.text="-"
+            else:
+                self.button_light.background_color = [1, 1, 1, 1]
+
+            networks.sendString(command)
 
             cur_time = time.time()
             cur_fps = fps.getFPS(cur_time - old_time)
