@@ -1,2 +1,5 @@
 pip3 install kivy
 pip3 install pygame
+pip3 install python-for-android
+pip3 install cython==0.25
+buildozer
