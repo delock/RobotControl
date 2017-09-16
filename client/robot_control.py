@@ -5,6 +5,7 @@ import io
 import threading
 
 from kivy.config import Config
+from kivy.utils import platform
 
 #window_width = 3840
 #window_height = 2160
@@ -33,6 +34,12 @@ from kivy.clock import Clock
 import networks
 import fps
 
+def is_desktop():
+    if (platform in ('linux', 'windows', 'macosx')):
+        return True
+    else:
+        return False
+
 class CameraFeed(Image):
     def __init__(self, **kwargs):
         super(Image, self).__init__(**kwargs)
@@ -47,7 +54,10 @@ class RobotControl(App):
     def action_thread(self):
         global stop_flag
 
-        networks.init(sys.argv[1], int(sys.argv[2]))
+        if (is_desktop()):
+            networks.init(sys.argv[1], int(sys.argv[2]))
+        else:
+            networks.init("192.168.0.114", 8087)
 
         old_time = time.time()
 
@@ -63,6 +73,12 @@ class RobotControl(App):
             self.label_4.text = networks.recvString()
             self.label_5.text = networks.recvString()
             self.label_bump.text = networks.recvString()
+
+            # set button status
+            if (self.command == "W8"):
+                self.button_w.background_color = [0.5, 1, 1, 1]
+            else:
+                self.button_w.background_color = [1, 1, 1, 1]
 
             networks.sendString(self.command)
 
@@ -81,9 +97,11 @@ class RobotControl(App):
     def on_start(self):
         threading.Thread(target=self.action_thread).start()
         event = Clock.schedule_interval(self.on_refresh, 1/30.)
-        self.keyboard = Window.request_keyboard(self.keyboard_closed, self)
-        self.keyboard.bind(on_key_down=self.on_keyboard_down)
-        self.keyboard.bind(on_key_up=self.on_keyboard_up)
+        if (is_desktop()):
+            self.keyboard = Window.request_keyboard(self.keyboard_closed, self)
+            self.keyboard.bind(on_key_down=self.on_keyboard_down)
+            self.keyboard.bind(on_key_up=self.on_keyboard_up)
+        pass
 
     def keyboard_closed(self):
         self.keyboard.unbind(on_key_down=self.on_keyboard_down)
