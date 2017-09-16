@@ -142,7 +142,7 @@ class RobotControl(App):
             return True
 
     def on_keyboard_up(self, keyboard, keycode):
-        self.command = "00"
+        self.command = "W5"
         return True
 
     light = 0
