@@ -41,8 +41,9 @@ bump = 0.0
 bump_time = time.time()
 
 def getBump():
+    global bump
     update_bump(0)
-    return bump
+    return int(bump*100)/100.0
 
 def update_bump(bump_val):
     # definition of bump
