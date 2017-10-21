@@ -1,1 +1,1 @@
-python3 robot_control.py
+python3 robot_control.py $1 $2
