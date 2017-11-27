@@ -58,7 +58,8 @@ def inference_frame(threadName, arg):
         while True:
             #begin = time.time()
             local_frame = settings.frame
-            img = local_frame[360:720, 360:720]
+            #img = local_frame[360:720, 360:720]
+            img = local_frame
             img = cv2.resize(img, dim)
             img = img.astype(np.float32)
             img[:,:,0] = (img[:,:,0] - ilsvrc_mean[0])
