@@ -35,8 +35,9 @@ def grab_frame(threadName, cap):
             blank_width = int((cap_width-cap_height)/2)
             temp_frame = cap_frame[0:cap_height-1, blank_width:cap_width-blank_width-1]
             frame_trim = int(cap_height*(1-1/1.5)/2)
-            center_frame = temp_frame[frame_trim:cap_height-1-frame_trim, frame_trim:cap_height-1-frame_trim]
-            st.frame = center_frame
+            #center_frame = temp_frame[frame_trim:cap_height-1-frame_trim, frame_trim:cap_height-1-frame_trim]
+            #st.frame = center_frame
+            st.frame = temp_frame
             st.frame_index = st.frame_index + 1
             #end = time.time()
             #print ("capture frame in " + str(end-begin) + " s")
