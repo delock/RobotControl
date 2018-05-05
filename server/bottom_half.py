@@ -71,9 +71,15 @@ def send_command(command):
                 update_bump((g_xy-4000)/1000)
             break
 
-def cam_position(pitch, yaw):
+def cam_position(pitch, yaw, two_step = False):
     global cam_pitch
     global cam_yaw
+
+    if (two_step):
+        command_list.append("campos "
+                            + str(cam_pitch) + " "
+                            + str(yaw))
+        time.sleep (0.5)
 
     command_list.append("campos "
                         + str(pitch) + " "

@@ -54,9 +54,9 @@ try:
                 elif (command == "C6"):
                     bottom_half.cam_right();
                 elif (command == "C0"):
-                    bottom_half.cam_position(0, 0)
+                    bottom_half.cam_position(0, 0, True)
                 elif (command == "C5"):
-                    bottom_half.cam_position(1000, 0)
+                    bottom_half.cam_position(1000, 0, True)
                 elif (command == "W8"):
                     bottom_half.wheel_forward()
                 elif (command == "W5"):
