@@ -3,7 +3,7 @@ import socket
 import sys
 import time
 
-import ncs
+#import ncs
 import camera
 import telebotics
 import bottom_half
@@ -11,7 +11,7 @@ import settings as st
 
 #### init ####
 camera.init()
-ncs.init('googlenet')
+#ncs.init('googlenet')
 telebotics.init('', int(sys.argv[1]))
 bottom_half.init()
 ##############
@@ -30,11 +30,16 @@ try:
 
             try:
                 telebotics.send_frame()
-                telebotics.send_string(st.labels[st.order[0]])
-                telebotics.send_string(st.labels[st.order[1]])
-                telebotics.send_string(st.labels[st.order[2]])
-                telebotics.send_string(st.labels[st.order[3]])
-                telebotics.send_string(st.labels[st.order[4]])
+                telebotics.send_string('Placeholder 0')
+                telebotics.send_string('Placeholder 1')
+                telebotics.send_string('Placeholder 2')
+                telebotics.send_string('Placeholder 3')
+                telebotics.send_string('Placeholder 4')
+                #telebotics.send_string(st.labels[st.order[0]])
+                #telebotics.send_string(st.labels[st.order[1]])
+                #telebotics.send_string(st.labels[st.order[2]])
+                #telebotics.send_string(st.labels[st.order[3]])
+                #telebotics.send_string(st.labels[st.order[4]])
                 telebotics.send_string(str(bottom_half.getBump()))
 
                 # receieve a key from client, and show it
