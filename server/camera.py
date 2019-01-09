@@ -6,8 +6,8 @@ import settings as st
 
 global cap_width
 global cap_height
-cap_width = 1920
-cap_height = 1080
+cap_width = 3264
+cap_height = 2448
 
 def init():
     global cap
