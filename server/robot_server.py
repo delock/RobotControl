@@ -68,13 +68,13 @@ try:
                 elif (command == "W6"):
                     bottom_half.wheel_right()
                 elif (command == "W7"):
-                    bottom_half.wheel_speed(200, 1000)
+                    bottom_half.wheel_speed(500, 1000)
                 elif (command == "W9"):
-                    bottom_half.wheel_speed(1000, 200)
+                    bottom_half.wheel_speed(1000, 500)
                 elif (command == "W1"):
-                    bottom_half.wheel_speed(-200, -1000)
+                    bottom_half.wheel_speed(-500, -1000)
                 elif (command == "W3"):
-                    bottom_half.wheel_speed(-1000, -200)
+                    bottom_half.wheel_speed(-1000, -500)
                 elif (command == "L1"):
                     bottom_half.light(True)
                 elif (command == "L0"):

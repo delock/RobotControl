@@ -4,6 +4,8 @@ import serial
 import settings as st
 import _thread as thread
 
+global cam_pitch
+
 def init():
     global ser
     global command_list
@@ -127,10 +129,12 @@ def wheel_speed (l_speed, r_speed):
     command_list.append("wheel " + str(l_speed) + " " + str(r_speed));
 
 def wheel_forward(speed = 1000):
-    wheel_speed (speed, speed)
+    wheel_speed (speed+st.wheel_left_fwd_adj,
+                 speed+st.wheel_right_fwd_adj)
 
 def wheel_backward(speed = 1000):
-    wheel_speed (-speed, -speed)
+    wheel_speed (-speed-st.wheel_left_bwd_adj,
+                 -speed-st.wheel_right_bwd_adj)
 
 def wheel_left(speed = 1000):
     wheel_speed (-speed, speed)
