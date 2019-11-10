@@ -11,13 +11,6 @@ from kivy.utils import platform
 window_width = 1920
 window_height = 1080
 
-Config.set('graphics', 'left', '0')
-Config.set('graphics', 'top', '0')
-Config.set('graphics', 'width', str(window_width))
-Config.set('graphics', 'height', str(window_height))
-Config.set('graphics', 'borderless', '1')
-
-
 from kivy.app import App
 from kivy.uix.label import Label
 from kivy.uix.widget import Widget
@@ -53,10 +46,10 @@ class RobotControl(App):
     def action_thread(self):
         global stop_flag
 
-        if (is_desktop()):
+        if (is_desktop() and len(sys.argv)>=3):
             networks.init(sys.argv[1], int(sys.argv[2]))
         else:
-            networks.init("192.168.0.114", 8087)
+            networks.init("192.168.0.114", 8088)
 
         old_time = time.time()
 
@@ -93,7 +86,8 @@ class RobotControl(App):
         threading.Thread(target=self.action_thread).start()
         event = Clock.schedule_interval(self.on_refresh, 1/30.)
         if (is_desktop()):
-            self.keyboard = Window.request_keyboard(self.keyboard_closed, self)
+            #self.keyboard = Window.request_keyboard(self.keyboard_closed, self)
+            self.keyboard = Window.request_keyboard(self.keyboard_closed, self.root)
             self.keyboard.bind(on_key_down=self.on_keyboard_down)
             self.keyboard.bind(on_key_up=self.on_keyboard_up)
         pass
@@ -121,17 +115,17 @@ class RobotControl(App):
         elif keycode[1] == '2':
             self.command = "L0"
 
-        elif keycode[1] == 'up':
+        elif keycode[1] == 'up' or keycode[1] == 'k':
             self.command = "C8"
-        elif keycode[1] == 'down':
+        elif keycode[1] == 'down' or keycode[1] == 'j':
             self.command = "C2"
-        elif keycode[1] == 'left':
+        elif keycode[1] == 'left' or keycode[1] == 'h':
             self.command = "C4"
-        elif keycode[1] == 'right':
+        elif keycode[1] == 'right' or keycode[1] == 'l':
             self.command = "C6"
-        elif keycode[1] == 'pageup':
+        elif keycode[1] == 'pageup' or keycode[1] == 'u':
             self.command = "C0"
-        elif keycode[1] == 'pagedown':
+        elif keycode[1] == 'pagedown' or keycode[1] == 'm':
             self.command = "C5"
 
         if keycode[1] == 'escape':
@@ -350,6 +344,14 @@ class RobotControl(App):
         return top_layout
 
 global stop_flag
+
+Config.set('graphics', 'left', '0')
+Config.set('graphics', 'top', '0')
+Config.set('graphics', 'fullscreen', 'auto')
+Config.set('graphics', 'width', str(window_width))
+Config.set('graphics', 'height', str(window_height))
+Config.set('graphics', 'borderless', '1')
+
 
 stop_flag = False
 RobotControl().run()
